@@ -50,17 +50,17 @@ $(function () {
 });
 
 $(function () {
- $(".status-button:not(.open)").on("click", function (e) {
-  $(".overlay-app").addClass("is-active");
- });
+// $(".status-button:not(.open)").on("click", function (e) {
+//  $(".overlay-app").addClass("is-active");
+// });
  $(".pop-up .close").click(function () {
   $(".overlay-app").removeClass("is-active");
  });
 });
 
-$(".status-button:not(.open)").click(function () {
- $(".pop-up").addClass("visible");
-});
+//$(".status-button:not(.open)").click(function () {
+// $(".pop-up").addClass("visible");
+//});
 
 $(".pop-up .close").click(function () {
  $(".pop-up").removeClass("visible");

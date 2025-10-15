@@ -71,3 +71,34 @@ const toggleButton = document.querySelector('.dark-light');
 toggleButton.addEventListener('click', () => {
   document.body.classList.toggle('light-mode');
 });
+// --- Backend call helper ---
+async function openLabAPI(labName) {
+  try {
+    const res = await fetch('/api/open_lab', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ lab: labName })
+    });
+    const data = await res.json();
+    alert(data.message); // shows success to user
+  } catch (err) {
+    console.error('openLab error', err);
+    alert('Error contacting backend');
+  }
+}
+
+// --- Attach handlers to all "Open" buttons (assumes .status-button class) ---
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.status-button').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      // find nearest .app-card and read the visible title
+      const card = btn.closest('.app-card');
+      let labName = 'Lab';
+      if (card) {
+        const span = card.querySelector('span');
+        if (span) labName = span.textContent.trim();
+      }
+      openLabAPI(labName);
+    });
+  });
+});

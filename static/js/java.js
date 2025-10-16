@@ -102,3 +102,81 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+// --- Sidebar click handler ---
+document.querySelectorAll('.side-menu a').forEach(link => {
+  link.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const action = link.dataset.action || '';
+
+    // Labs already working
+    if (['physics-lab', 'chemistry-lab', 'work-space'].includes(action)) {
+      let labName = action.replace('-', ' ');
+      try {
+        const res = await fetch('/api/open_lab', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ lab: labName })
+        });
+        const data = await res.json();
+        alert(data.message);
+      } catch (err) {
+        console.error('Sidebar lab error:', err);
+        alert('Error contacting backend');
+      }
+    } else {
+      // Placeholder for remaining buttons
+      switch (action) {
+        case 'all-material':
+          alert('Opening All Material section...');
+          break;
+        case 'uploads':
+          alert('Uploads feature coming soon!');
+          break;
+        case 'maths-lab':
+          alert('Maths lab page under construction.');
+          break;
+        case 'design-lab':
+          alert('Design lab will be available soon.');
+          break;
+        case 'computer-lab':
+          alert('Computer lab module coming next.');
+          break;
+        case 'manage-fonts':
+          alert('Font management feature is not live yet.');
+          break;
+        case 'stock':
+          alert('Stock dashboard under development.');
+          break;
+        case 'tutorials':
+          alert('Tutorials section launching soon!');
+          break;
+        default:
+          alert(`${action.replace('-', ' ')} feature is coming soon!`);
+      }
+    }
+  });
+});
+// --- Bell and Cloud icon actions ---
+document.addEventListener('DOMContentLoaded', () => {
+  const bell = document.getElementById('bellIcon');
+  const cloud = document.getElementById('cloudIcon');
+
+  if (bell) {
+    bell.addEventListener('click', () => {
+      alert('You have 3 new notifications!');
+    });
+  }
+
+  if (cloud) {
+    cloud.addEventListener('click', async () => {
+      try {
+        const res = await fetch('/api/check_cloud_status');
+        const data = await res.json();
+        alert(`Cloud status: ${data.status}`);
+      } catch (err) {
+        console.error(err);
+        alert('Error contacting cloud service');
+      }
+    });
+  }
+});

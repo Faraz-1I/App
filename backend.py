@@ -14,6 +14,12 @@ def open_lab():
     lab_name = data.get('lab', 'Unknown')
     print(f"[backend] Opening: {lab_name}")   # check VSCode terminal
     return jsonify({"message": f"{lab_name} opened successfully!"})
+# API: called when user clicks "Cloud" icon
+@app.route('/api/check_cloud_status')
+def check_cloud_status():
+    print("[backend] Cloud icon clicked")
+    return jsonify({"status": "All systems operational"})
 
 if __name__ == '__main__':
     app.run(debug=True)
+
